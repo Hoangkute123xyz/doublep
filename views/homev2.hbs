@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DoubleP Company</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+
+<div class="wrapper">
+
+    <nav id="sidebar">
+
+        <div class="sidebar-header">
+            <h2 style="font-weight: bold">Double P</h2>
+        </div>
+        <ul class="lisst-unstyled components">
+
+            <li class="active" id="user" method="get">
+                <a href="/user">Quản lý tài khoản</a>
+            </li>
+
+            <li id="typePet" method="get">
+                <a href="#typePetMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quản lý giống loài</a>
+                <ul class="collapse list-unstyled" id="typePetMenu">
+                    <li id="typePet" method="get" >
+                        <a href="/typePet" >Loài</a>
+                    </li>
+                    <li id="breed" method="get">
+                        <a href="/breed">Giống</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li action="/ban" id="banNew" method="get" >
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Báo cáo</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li id="ban" method="get" >
+                        <a href="/ban" >Báo cáo bài viết</a>
+                    </li>
+                    <li id="banComment" method="get">
+                        <a href="/banComment">Báo cáo bình luận</a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li id="ban" method="get">
+                <a href="#statistical" data-toggle="collapse" class="dropdown-toggle">Thống kê</a>
+                <ul class="collapse list-unstyled" id="statistical">
+                    <li id="ban" method="get">
+                        <a href="/statisticalNew">Theo bài viết báo cáo</a>
+                    </li>
+                    <li>
+                        <a href="/statisticalComment">Theo bình luận báo cáo</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info" >
+                    <i class="fas fa-align-left"></i>
+                    <span>Menu</span>
+
+                </button>
+            </div>
+        </nav>
+
+
+        <table class="table table-hover">
+            <thead class="thead-gray">
+            <tr>
+                <th>Tên</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Kiểu đăng nhập</th>
+            </tr>
+            {{#each accountList}}
+                <tr data-toggle="modal" data-target="#detailUser" onclick="
+                        document.getElementsByName('fullName')[0].value = '{{this.fullName}}';
+                        document.getElementsByName('address')[0].value = '{{this.commune}}-{{this.district}}-{{this.province}}';
+                        document.getElementsByName('phoneNumber')[0].value = '{{this.phoneNumber}}';
+                        document.getElementsByName('idPets')[0].value = '{{this.idPets.length}}';
+                        document.getElementById('avatar').src = '{{this.avatar}}';
+                        ">
+                    <td>{{this.fullName}}</td>
+                    <td>{{this.phoneNumber}}</td>
+                    <td>{{this.commune}}-{{this.district}}-{{this.province}}</td>
+                    <td>{{this.typeAccount}}</td>
+                </tr>
+
+            {{/each}}
+            </thead>
+        </table>
+
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="detailUser" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 justify-content-center">
+                    <img id="avatar" class="w-25">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Họ tên</span>
+                    </div>
+                    <input type="text" name="fullName" disabled class="form-control" aria-describedby="basic-addon1"
+                           required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Địa chỉ</span>
+                    </div>
+                    <input type="text" name="address" disabled class="form-control"
+                           aria-describedby="basic-addon1" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Số điện thoại</span>
+                    </div>
+                    <input type="text" name="phoneNumber" disabled class="form-control"
+                           aria-describedby="basic-addon1" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Số lương pet</span>
+                    </div>
+                    <input type="text" name="idPets" disabled class="form-control"
+                           aria-describedby="basic-addon1" required>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
